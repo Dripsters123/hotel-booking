@@ -18,17 +18,33 @@ class RoomController extends Controller
         return view('hotel.create');
     }
 
-    public function store(Request $request)
-    {
-        $request->validate([
-            'name' => 'required|string|max:255',
-            'price' => 'required|integer',
-            'description' => 'required|string',
-            'availability' => 'required|boolean',
-        ]);
+  public function store(Request $request)
+{
+    $request->validate([
+        'name' => 'required|string|max:255',
+        'price' => 'required|integer',
+        'description' => 'required|string',
+        'availability' => 'required|boolean',
+        'image_url' => 'required|url', // Add this line to validate the image URL
+    ]);
 
-        Room::create($request->only(['name', 'price', 'description', 'availability']));
+    Room::create($request->only(['name', 'price', 'description', 'availability', 'image_url'])); // Include image_url in creation
 
-        return redirect()->route('rooms')->with('success', 'Room created successfully.');
-    }
+    return redirect()->route('rooms')->with('success', 'Room created successfully.');
+}
+
+    public function destroy($id)
+{
+    $room = Room::findOrFail($id);
+    $room->delete();
+
+    return redirect()->route('rooms')->with('success', 'Room deleted successfully.');
+}
+public function show($id)
+{
+    $room = Room::findOrFail($id);
+    return view('hotel.show', compact('room'));
+}
+
+
 }

@@ -2,7 +2,6 @@
 
 namespace App\Models;
 
-// use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -10,6 +9,10 @@ use Illuminate\Notifications\Notifiable;
 class User extends Authenticatable
 {
     use HasFactory, Notifiable;
+
+    // Define constants for roles
+    const ADMIN = 'ADMIN';
+    const USER = 'USER';
 
     /**
      * The attributes that are mass assignable.
@@ -20,6 +23,8 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'phone_number',
+        'role', // Add role to mass assignable
     ];
 
     /**
@@ -43,5 +48,15 @@ class User extends Authenticatable
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
         ];
+    }
+
+    /**
+     * Check if the user is an admin.
+     *
+     * @return bool
+     */
+    public function isAdmin(): bool
+    {
+        return $this->role === self::ADMIN;
     }
 }

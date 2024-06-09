@@ -17,6 +17,7 @@ return new class extends Migration
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
+            $table->string('role')->default('USER'); // Add role column with default value USER
             $table->rememberToken();
             $table->timestamps();
         });
@@ -35,6 +36,10 @@ return new class extends Migration
             $table->longText('payload');
             $table->integer('last_activity')->index();
         });
+        Schema::table('users', function (Blueprint $table) {
+    $table->string('phone_number')->nullable();
+});
+
     }
 
     /**

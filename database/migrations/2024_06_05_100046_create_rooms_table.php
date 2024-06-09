@@ -14,10 +14,11 @@ return new class extends Migration
         Schema::create('rooms', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
-            $table->integer("name");
-            $table->integer("price");   
-            $table->text("description");
-            $table->boolean("availability")->default(false);
+            $table->string('name'); // Changed to string from integer
+            $table->float('price', 12, 2);   
+            $table->text('description');
+            $table->boolean('availability')->default(false);
+            $table->string('image_url')->nullable(); // Added the image_url column
         });
     }
 
