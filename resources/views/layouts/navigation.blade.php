@@ -15,6 +15,9 @@
     <a href="{{ route('rooms.create') }}" class="text-lg font-semibold text-gray-800 dark:text-gray-200 hover:bg-gray-200 dark:hover:bg-gray-700 p-2 rounded {{ request()->routeIs('rooms.create') ? 'bg-gray-200 dark:bg-gray-700 border-b-2 border-green-500' : '' }}">
         {{ __('Create Room') }}
     </a>
+    <a href="{{ route('requests.index') }}" class="text-lg font-semibold text-gray-800 dark:text-gray-200 hover:bg-gray-200 dark:hover:bg-gray-700 p-2 rounded {{ request()->routeIs('requests.index') ? 'bg-gray-200 dark:bg-gray-700 border-b-2 border-green-500' : '' }}">
+            {{ __('Requests') }}
+        </a>
 @endif
 
                 </div>

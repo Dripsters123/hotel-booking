@@ -19,6 +19,7 @@ return new class extends Migration
             $table->text('description');
             $table->boolean('availability')->default(false);
             $table->string('image_url')->nullable(); // Added the image_url column
+            
         });
     }
 
