@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->timestamps();
             $table->string('name'); // Changed to string from integer
-            $table->float('price', 12, 2);   
+            $table->float('price', 8, 2);   
             $table->text('description');
             $table->boolean('availability')->default(false);
             $table->string('image_url')->nullable(); // Added the image_url column

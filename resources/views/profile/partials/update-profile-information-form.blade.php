@@ -48,7 +48,7 @@
         </div>
 <div>
     <label for="phone_number" class="block font-medium text-sm text-gray-700">Phone Number</label>
-    <input id="phone_number" type="text" name="phone_number" value="{{ old('phone_number', $user->phone_number) }}" autocomplete="phone_number" class="mt-1 p-1 border border-gray-300 block w-full rounded-md">
+    <input id="phone_number" type="number" name="phone_number" value="{{ old('phone_number', $user->phone_number) }}" autocomplete="phone_number" class="mt-1 p-1 border border-gray-300 block w-full rounded-md">
 </div>
 
         <div class="flex items-center gap-4">

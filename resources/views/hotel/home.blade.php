@@ -1,7 +1,7 @@
 <x-app-layout>
     @section('content')
     <div class="container mx-auto px-4 py-8">
-        <h1 class="text-2xl font-bold mb-6">My Rooms</h1>
+        <h1 class="text-2xl font-bold mb-6 text-center">My Rooms</h1>
         <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
             @foreach (session('accepted_rooms', []) as $room)
                 @if($room['room'])

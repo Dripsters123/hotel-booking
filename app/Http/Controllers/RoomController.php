@@ -18,59 +18,60 @@ class RoomController extends Controller
         return view('hotel.create');
     }
 
-  public function store(Request $request)
-{
-    $request->validate([
-        'name' => 'required|string|max:255',
-        'price' => 'required|integer',
-        'description' => 'required|string',
-        'availability' => 'required|boolean',
-        'image_url' => 'required|url', // Add this line to validate the image URL
-    ]);
-
-    Room::create($request->only(['name', 'price', 'description', 'availability', 'image_url'])); // Include image_url in creation
-
-    return redirect()->route('rooms')->with('success', 'Room created successfully.');
-}
-
+    public function store(Request $request)
+    {
+        $request->validate([
+            'name' => 'required|string|max:255|regex:/^[a-zA-Z0-9\s]+$/',
+            'price' => 'required|numeric|min:0',
+            'description' => 'required|string',
+            'availability' => 'required|boolean',
+            'image_url' => 'required|url',
+        ]);
+    
+        Room::create($request->only(['name', 'price', 'description', 'availability', 'image_url']));
+    
+        return redirect()->route('rooms')->with('success', 'Room created successfully.');
+    }
+    
     public function destroy($id)
-{
-    $room = Room::findOrFail($id);
-    $room->delete();
+    {
+        $room = Room::findOrFail($id);
+        $room->delete();
 
-    return redirect()->route('rooms')->with('success', 'Room deleted successfully.');
-}
-public function show($id)
-{
-    $room = Room::findOrFail($id);
-    return view('hotel.show', compact('room'));
-}
-// Add this method to your RoomController
-public function edit($id)
-{
-    $room = Room::findOrFail($id);
-    return view('hotel.edit', compact('room'));
-}
+        return redirect()->route('rooms')->with('success', 'Room deleted successfully.');
+    }
 
-public function update(Request $request, $id)
-{
-    $request->validate([
-        'name' => 'required|string|max:255',
-        'price' => 'required|integer',
-        'description' => 'required|string',
-        'availability' => 'required|boolean',
-        'image_url' => 'required|url',
-    ]);
+    public function show($id)
+    {
+        $room = Room::findOrFail($id);
+        return view('hotel.show', compact('room'));
+    }
 
-    $room = Room::findOrFail($id);
-    $room->update($request->only(['name', 'price', 'description', 'availability', 'image_url']));
+    public function edit($id)
+    {
+        $room = Room::findOrFail($id);
+        return view('hotel.edit', compact('room'));
+    }
 
-    return redirect()->route('rooms')->with('success', 'Room updated successfully.');
-}
-public function reserve($id)
-{
-    $room = Room::findOrFail($id);
-    return view('hotel.reservation.reservation', compact('room'));
-}
+    public function update(Request $request, $id)
+    {
+        $request->validate([
+            'name' => 'required|string|max:255|regex:/^[a-zA-Z0-9\s]+$/',
+            'price' => 'required|numeric|min:0',
+            'description' => 'required|string',
+            'availability' => 'required|boolean',
+            'image_url' => 'required|url',
+        ]);
 
+        $room = Room::findOrFail($id);
+        $room->update($request->only(['name', 'price', 'description', 'availability', 'image_url']));
+
+        return redirect()->route('rooms')->with('success', 'Room updated successfully.');
+    }
+
+    public function reserve($id)
+    {
+        $room = Room::findOrFail($id);
+        return view('hotel.reservation.reservation', compact('room'));
+    }
 }
