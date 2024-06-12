@@ -1,4 +1,6 @@
 <x-app-layout>
+   
+
     @section('content')
     <div class="container mx-auto px-4 py-8">
         <h1 class="text-2xl font-bold mb-6">Reservation Requests</h1>
@@ -17,11 +19,11 @@
                     <div class="mt-4">
                         <form action="{{ route('admin.reservations.accept', $reservation->id) }}" method="POST" style="display: inline-block;">
                             @csrf
-                            <button type="submit" class="bg-green-500 text-white font-bold py-2 px-4 rounded-lg mr-2">Accept</button>
+                            <button type="submit" class="accept-button bg-green-500 text-white font-bold py-2 px-4 rounded-lg mr-2">Accept</button>
                         </form>
                         <form action="{{ route('admin.reservations.decline', $reservation->id) }}" method="POST" style="display: inline-block;">
                             @csrf
-                            <button type="submit" class="bg-red-500 text-white font-bold py-2 px-4 rounded-lg">Decline</button>
+                            <button type="submit" class="decline-button bg-red-500 text-white font-bold py-2 px-4 rounded-lg">Decline</button>
                         </form>
                     </div>
                 </div>
@@ -30,3 +32,4 @@
     </div>
     @endsection
 </x-app-layout>
+<script src="{{ asset('request.js') }}"></script>

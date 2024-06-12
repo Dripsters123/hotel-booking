@@ -1,7 +1,8 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use App\Http\Controllers\RoomController;
+use App\Models\Room;
 use Illuminate\Http\Request;
 use App\Models\Reservation;
 
@@ -32,25 +33,45 @@ class ReservationController extends Controller
         return view('hotel.reservation.requests', compact('reservations'));
     }
 
-    public function accept(Request $request, $id)
-    {
-        $reservation = Reservation::findOrFail($id);
-        $reservation->status = 'accepted';
-        $reservation->save();
+public function accept(Request $request, $id)
+{
+    $reservation = Reservation::findOrFail($id);
+    $reservation->status = 'accepted';
+    $reservation->save();
 
-        // You may add other logic here if needed.
+    // Get the room associated with the reservation
+    $room = Room::find($reservation->room_id);
 
-        return redirect()->back()->with('success', 'Reservation accepted successfully!');
+    // Check if the room exists
+    if ($room) {
+        // Update the room availability to false (0)
+        $room->availability = 0; // 0 means not available
+        $room->save();
+
+        // Add the accepted room and reservation dates to the session
+        $acceptedRooms = session('accepted_rooms', []);
+        $acceptedRooms[] = ['room' => $room, 'start_date' => $reservation->start_date, 'end_date' => $reservation->end_date];
+        session(['accepted_rooms' => $acceptedRooms]);
     }
 
-    public function decline(Request $request, $id)
-    {
-        $reservation = Reservation::findOrFail($id);
-        $reservation->status = 'declined';
-        $reservation->save();
+    // Delete the reservation
+    $reservation->delete();
 
-        // You may add other logic here if needed.
+    return redirect()->back()->with('success', 'Reservation accepted successfully!');
+}
 
-        return redirect()->back()->with('success', 'Reservation declined successfully!');
-    }
+
+
+
+public function decline(Request $request, $id)
+{
+    $reservation = Reservation::findOrFail($id);
+    $reservation->status = 'declined';
+    $reservation->save();
+
+    // Delete the reservation
+    $reservation->delete();
+
+    return redirect()->back()->with('success', 'Reservation declined successfully!');
+}
 }

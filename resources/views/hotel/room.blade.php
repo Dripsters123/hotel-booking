@@ -6,7 +6,7 @@
             @foreach ($rooms as $room)
             <div class="w-full md:w-1/2 lg:w-1/3 px-4 mb-8">
                 <div class="bg-white dark:bg-gray-800 shadow-lg rounded-lg overflow-hidden hover:shadow-xl transition-shadow duration-300">
-                    <div class="p-6">
+                    <div class="p-6" style="{{ $room->availability == 0 ? 'background-color: red;' : '' }}">
                         <h5 class="text-xl font-bold mb-2">{{ $room->name }}</h5>
                         <img src="{{ $room->image_url }}" alt="Room Image" class="w-full h-auto mb-4">
                         <div class="flex justify-between items-center">
