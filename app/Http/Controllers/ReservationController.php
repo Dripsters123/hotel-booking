@@ -74,4 +74,6 @@ public function decline(Request $request, $id)
 
     return redirect()->back()->with('success', 'Reservation declined successfully!');
 }
+
+
 }

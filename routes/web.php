@@ -3,6 +3,7 @@
 use App\Http\Controllers\RoomController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ReservationController;
+use App\Http\Controllers\CommentController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -33,5 +34,16 @@ Route::middleware('auth')->group(function () {
     Route::post('/admin/reservations/{id}/accept', [ReservationController::class, 'accept'])->name('admin.reservations.accept');
     Route::post('/admin/reservations/{id}/decline', [ReservationController::class, 'decline'])->name('admin.reservations.decline');
 });
+Route::post('/rooms/{id}/cancel', [RoomController::class, 'cancel'])->name('rooms.cancel');
+Route::get('/rooms/{id}/addImage', [RoomController::class, 'addImage'])->middleware(['auth', 'verified'])->name('rooms.addImage');
+Route::post('/rooms/{id}/storeImage', [RoomController::class, 'storeImage'])->middleware(['auth', 'verified'])->name('rooms.storeImage');
+
+Route::get('/search', [RoomController::class, 'search'])->name('rooms.search');
+Route::get('/searchAcceptedRooms', [ReservationController::class, 'searchAcceptedRoomsByNameAndDescription'])->name('rooms.searchAccepted');
+
+
+Route::get('/rooms/{room}/comments/create', [CommentController::class, 'create'])->middleware(['auth', 'verified'])->name('comments.create');
+Route::post('/rooms/{room}/comments', [CommentController::class, 'store'])->middleware(['auth', 'verified'])->name('comments.store');
+
 
 require __DIR__.'/auth.php';

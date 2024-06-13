@@ -48,8 +48,24 @@
         </div>
 <div>
     <label for="phone_number" class="block font-medium text-sm text-gray-700">Phone Number</label>
-    <input id="phone_number" type="number" name="phone_number" value="{{ old('phone_number', $user->phone_number) }}" autocomplete="phone_number" class="mt-1 p-1 border border-gray-300 block w-full rounded-md">
+    <input id="phone_number" type="text" name="phone_number" value="{{ old('phone_number', $user->phone_number) }}" autocomplete="phone_number" class="mt-1 p-1 border border-gray-300 block w-full rounded-md" pattern="[0-9]{8}" maxlength="8" oninput="this.setCustomValidity(''); if (!this.validity.valid) this.setCustomValidity('Please enter exactly 8 digits.');" required>
+    <div id="phone_number_feedback" class="text-sm text-gray-500">0 / 8</div>
 </div>
+
+<script>
+    const phoneNumberInput = document.getElementById('phone_number');
+    const phoneNumberFeedback = document.getElementById('phone_number_feedback');
+
+    phoneNumberInput.addEventListener('input', () => {
+        phoneNumberFeedback.textContent = `${phoneNumberInput.value.length} / 8`;
+        if (phoneNumberInput.value.length > 8) {
+            phoneNumberInput.value = phoneNumberInput.value.slice(0, 8);
+        }
+    });
+</script>
+
+
+
 
         <div class="flex items-center gap-4">
             <x-primary-button>{{ __('Save') }}</x-primary-button>
