@@ -16,11 +16,11 @@
             @auth <!-- Check if user is authenticated -->
                 <div class="mb-4">
                     <label for="email" class="block text-gray-700 dark:text-gray-400 font-bold mb-2">Email:</label>
-                    <input type="email" id="email" name="email" class="w-full p-2 border border-gray-300 rounded-lg" value="{{ auth()->user()->email }}" readonly>
+                    <input type="email" id="email" name="email" class="w-full p-2 border border-gray-300 rounded-lg" value="{{ auth()->user()->email }}" >
                 </div>
                 <div class="mb-4">
                     <label for="phone" class="block text-gray-700 dark:text-gray-400 font-bold mb-2">Phone Number:</label>
-                    <input type="text" id="phone" name="phone" class="w-full p-2 border border-gray-300 rounded-lg" value="{{ auth()->user()->phone_number }}" readonly>
+                    <input type="text" id="phone" name="phone" class="w-full p-2 border border-gray-300 rounded-lg" value="{{ auth()->user()->phone_number }}" >
                 </div>
             @endauth
 

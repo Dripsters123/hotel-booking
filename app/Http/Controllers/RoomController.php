@@ -130,4 +130,5 @@ class RoomController extends Controller
                       ->get();
         return view('hotel.room', compact('rooms'));
     }
+    
 }
