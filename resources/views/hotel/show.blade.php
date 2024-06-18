@@ -33,7 +33,14 @@
                         <div class="mt-4 h-72 overflow-y-scroll">
                             @foreach($room->comments as $comment)
                                 <div class="mt-4">
-                                    <div class="text-gray-600">{{ $comment->body }}</div>
+                                    <div class="text-gray-600 comment-container">
+                                        <div class="comment-content">
+                                            {{ $comment->body }}
+                                        </div>
+                                        <div class="comment-controls hidden">
+                                            <a href="javascript:void(0)" class="show-more text-blue-500">Show more</a>
+                                        </div>
+                                    </div>
                                     <div class="text-sm text-gray-400">Posted by {{ $comment->user->name }} on {{ $comment->created_at->format('M d, Y') }}</div>
                                 </div>
                             @endforeach
@@ -70,6 +77,54 @@
             </div>
         </div>
     </div>
+    
     @endsection
 </x-app-layout>
-<script src="{{ asset('js/slideshow.js') }}"></script>
+<script src="{{ asset('slideshow.js') }}"></script>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    document.querySelectorAll('.comment-container').forEach(function (container) {
+        var commentContent = container.querySelector('.comment-content');
+        var commentControls = container.querySelector('.comment-controls');
+        commentContent.style.maxHeight = '4.6em'; // Set the initial max height
+
+        if (commentContent.scrollHeight > commentContent.clientHeight) {
+            commentControls.classList.remove('hidden');
+        }
+
+        container.querySelector('.show-more').addEventListener('click', function () {
+            if (this.innerText === 'Show more') {
+                commentContent.style.maxHeight = 'none';
+                this.innerText = 'Show less';
+            } else {
+                commentContent.style.maxHeight = '4.6em'; // Adjust this value as needed
+                this.innerText = 'Show more';
+            }
+        });
+    });
+});
+</script>
+<style>
+.comment-container {
+    position: relative;
+    overflow: hidden;
+}
+.comment-content {
+    overflow-wrap: break-word;
+    max-height: 4.6em; /* Adjust this value as needed */
+    transition: max-height 0.3s ease;
+}
+.comment-controls {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    background: white; /* Adjust the background color to match your design */
+    padding-left: 5px;
+}
+.show-more {
+    cursor: pointer;
+}
+.hidden {
+    display: none;
+}
+</style>
