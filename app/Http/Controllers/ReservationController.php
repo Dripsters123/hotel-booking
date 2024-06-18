@@ -11,14 +11,14 @@ class ReservationController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'name' => 'required|string|max:255|regex:/^[a-zA-Z0-9\s]+$/',
+            'name' => 'required|string|max:255|regex:/^[a-zA-Z\s]+$/',
             'email' => 'required|email|max:255',
             'phone' => 'required|string|max:8|regex:/^[a-zA-Z0-9\s]+$/',
             'start_date' => 'required|date',
             'end_date' => 'required|date|after_or_equal:start_date',
             'room_id' => 'required|exists:rooms,id',
         ]);
-
+        
         $reservation = new Reservation();
         $reservation->fill($request->all()); // Using fill() method to mass assign attributes
         $reservation->status = 'pending'; // Set default status

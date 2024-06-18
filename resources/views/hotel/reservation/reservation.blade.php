@@ -6,12 +6,13 @@
             @csrf
             <input type="hidden" name="room_id" value="{{ $room->id }}">
             <div class="mb-4">
-                <label for="name" class="block text-gray-700 dark:text-gray-400 font-bold mb-2">Name:</label>
-                <input type="text" id="name" name="name" class="w-full p-2 border border-gray-300 rounded-lg @error('name') border-red-500 @enderror" value="{{ old('name') }}" required>
-                @error('name')
-                <p class="text-red-500 text-xs mt-2">{{ $message }}</p>
-                @enderror
-            </div>
+    <label for="name" class="block text-gray-700 dark:text-gray-400 font-bold mb-2">Name:</label>
+    <input type="text" id="name" name="name" class="w-full p-2 border border-gray-300 rounded-lg @error('name') border-red-500 @enderror" value="{{ old('name') }}" required>
+    @error('name')
+    <p class="text-red-500 text-xs mt-2">{{ $message }}</p>
+    @enderror
+</div>
+
 
             @auth <!-- Check if user is authenticated -->
                 <div class="mb-4">
@@ -20,7 +21,11 @@
                 </div>
                 <div class="mb-4">
                     <label for="phone" class="block text-gray-700 dark:text-gray-400 font-bold mb-2">Phone Number:</label>
-                    <input type="text" id="phone" name="phone" class="w-full p-2 border border-gray-300 rounded-lg" value="{{ auth()->user()->phone_number }}" >
+                    <input type="text" id="phone" name="phone" class="w-full p-2 border border-gray-300 rounded-lg" value="{{ old('phone') }}" maxlength="8" pattern="[0-9]{8}" oninput="setCustomValidity(''); if (!this.validity.valid) setCustomValidity('Please enter exactly 8 digits.');">
+                    
+                    @error('phone')
+                    <p class="text-red-500 text-xs mt-2">{{ $message }}</p>
+                    @enderror
                 </div>
             @endauth
 
@@ -46,4 +51,6 @@
         </form>
     </div>
     @endsection
+
+  
 </x-app-layout>
