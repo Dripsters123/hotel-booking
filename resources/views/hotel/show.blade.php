@@ -124,7 +124,5 @@ document.addEventListener('DOMContentLoaded', function () {
 .show-more {
     cursor: pointer;
 }
-.hidden {
-    display: none;
-}
+
 </style>
